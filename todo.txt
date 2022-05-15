@@ -1,0 +1,13 @@
+>Assets
+    Categories(clasify assets)
+        printers->laptops->desktops->
+    Assets(allow excel upload, download template)
+        Category -> Make + model -> Specification -> Serial(unique) -> barcode(unique) -> Date added
+
+> laptops nnb
+    laptops lists(searchable)| where Category=laptop. => select list from view(Assets)
+        Make + model -> Specification -> Serial(unique) -> barcode(unique) -> Date added
+    user lists(from ad) create front end sync
+    locations(hq, branches, departments). make searchable
+    laptop transactions
+        laptop -> location ->user(unique) -> dateassigned ->active?(current)
