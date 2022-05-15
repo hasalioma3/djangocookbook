@@ -1,9 +1,11 @@
 from django.contrib import admin
 from .models import Categories, Assets
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.forms import forms
 from django.urls import path
-# import render from django
+# import HttpResponseRedirect from django
+
+from django.contrib import messages
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -42,8 +44,8 @@ class CategoriesAdmin(admin.ModelAdmin, ExportCsvMixin):
     search_fields = ('name',)
     actions = [ "export_as_csv"]
 class AssetsAdmin(admin.ModelAdmin, ExportCsvMixin):
-    list_display = ('name', 'description', 'category', 'price', 'created', 'updated')
-    search_fields = ('name', 'description', 'category__name', 'created', 'updated')
+    list_display = ('name', 'description', 'category', 'price', 'serial_No', 'barcode', 'created', 'updated')
+    search_fields = ('name', 'description', 'category__name', 'serial_No', 'barcode', 'created', 'updated')
     list_filter = ('category',)
     actions = [ "export_as_csv"]
     change_list_template = "assets/change_list.html"
@@ -62,6 +64,9 @@ class AssetsAdmin(admin.ModelAdmin, ExportCsvMixin):
                 return HttpResponseRedirect(request.path_info)
             data_set = csv_file.read().decode('UTF-8')
             csv_data = data_set.split("\n")
+            # count rows in a csv
+            row_count = len(csv_data)
+           
             try:
                 for row in csv_data:
                     fields = row.split(",")
@@ -75,14 +80,15 @@ class AssetsAdmin(admin.ModelAdmin, ExportCsvMixin):
                         created=datetime.datetime.now(), 
                         updated=datetime.datetime.now()
                     )
+                    
                     # check if error
-                    if created[1] == True:
-                        print("created")
-                    else:
-                        print("not created")
+                if created[1] == True:
+                    messages.success(request, "Sucessfully created " + str(row_count) + " assets")
+                else:
+                    messages.error(request, "Not Created")
             except Exception as e:
-                print(e)
-                return HttpResponse("The following Error Occured : " + str(e))
+                messages.error(request, e)
+            # return HttpResponse("The following Error Occured : " + str(e))
             # return HttpResponseRedirect("../")
             return redirect('admin:assets_assets_changelist')
         form = CsvImportForm()
