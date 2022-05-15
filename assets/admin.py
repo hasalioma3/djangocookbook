@@ -4,8 +4,8 @@ from django.http import HttpResponse
 from django.forms import forms
 from django.urls import path
 # import render from django
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+import datetime
 import csv
 from django.utils.encoding import smart_str
 
@@ -59,21 +59,32 @@ class AssetsAdmin(admin.ModelAdmin, ExportCsvMixin):
             csv_file = request.FILES["csv_file"]
             if not csv_file.name.endswith('.csv'):
                 messages.error(request, 'This is not a CSV file')
+                return HttpResponseRedirect(request.path_info)
             data_set = csv_file.read().decode('UTF-8')
-            reader = csv.reader(data_set)
-            next(reader, None)
-            for row in reader:
-                _, created = Assets.objects.get_or_create(
-                    # id=row[0],
-                    name=row[0],
-                    description=row[0],
-                    # category=row[2],
-                    # price=row[3],
-                    # created=datetime.now(),
-                    # updated=datetime.now()
-                )
-            self.message_user(request, 'Your CSV file has been successfully imported')
-            return redirect('admin:assets_asset_changelist')
+            csv_data = data_set.split("\n")
+            try:
+                for row in csv_data:
+                    fields = row.split(",")
+                    created = Assets.objects.get_or_create( 
+                        name=fields[0],  
+                        description = fields[1],
+                        category=Categories(id=fields[2]),
+                        price=fields[3], 
+                        serial_No=fields[4],
+                        barcode=fields[5],
+                        created=datetime.datetime.now(), 
+                        updated=datetime.datetime.now()
+                    )
+                    # check if error
+                    if created[1] == True:
+                        print("created")
+                    else:
+                        print("not created")
+            except Exception as e:
+                print(e)
+                return HttpResponse("The following Error Occured : " + str(e))
+            # return HttpResponseRedirect("../")
+            return redirect('admin:assets_assets_changelist')
         form = CsvImportForm()
         payload = {'form': form}
         return render(request, 'assets/import.html', payload)

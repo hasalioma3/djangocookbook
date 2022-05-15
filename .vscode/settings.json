@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:djangocookbook}/db.sqlite3",
+            "name": "ali"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

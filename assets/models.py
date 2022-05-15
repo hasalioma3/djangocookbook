@@ -16,8 +16,8 @@ class Assets(models.Model):
     description = models.TextField()
     category = models.ForeignKey(Categories, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    # stock = models.IntegerField()
-    # available = models.BooleanField(default=True)
+    serial_No = models.CharField(max_length=16, unique=True, )
+    barcode = models.CharField(max_length=16, unique=True, )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True) 
 
