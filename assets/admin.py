@@ -49,6 +49,7 @@ class AssetsAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_filter = ('category',)
     actions = [ "export_as_csv"]
     change_list_template = "assets/change_list.html"
+    list_per_page = 2
     def get_urls(self):
         urls = super().get_urls()
         my_urls = [
