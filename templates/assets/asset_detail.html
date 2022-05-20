@@ -1,0 +1,25 @@
+<!-- extend base -->
+{% extends 'base.html' %}
+{% block title %}
+      ASSET DETAILS
+    {% endblock %}
+{% block content %}
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Asset Name</th>
+        <th>Asset Barcode</th>
+        <th>Asset Serial No</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{assets.name}} {{ assets.category}}</td>
+            <td>{{assets.barcode}}</td>
+            <td>{{assets.serial_No}}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+{%endblock%}

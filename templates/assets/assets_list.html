@@ -1,0 +1,55 @@
+<!-- extend base -->
+{% extends 'base.html' %}
+{% block title %}
+      ASSET LIST
+    {% endblock %}
+{% block content %}
+{% if user.is_staff  %}
+<button class="primary button-sm">
+    <a href="{% url 'assets:add_asset' %}">
+        <i class="fa-solid fa-plus"></i>
+    </a>
+    <!-- <a class="nav-link" href="{% url 'assets:add_asset' %}">Add New asset</a> -->
+
+</button>
+{% endif %}
+<table class="table table-sm ">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Barcode</th>
+            <th>Serial No</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for asset in assets %}
+        <tr>
+            <td>{{ asset.name }}</td>
+            <td>{{ asset.description }}</td>
+            <td>{{ asset.category.name }}</td>
+            <td>{{ asset.barcode }}</td>
+            <td>{{ asset.serial_No }}</td>
+            <td>
+                <a href="{% url 'assets:asset_detail' asset.id %}">
+                    <i class="fa-solid fa-eye"></i>
+                </a> 
+                {% if user.is_staff  %}
+                <a href="{% url 'assets:edit_asset' asset.id %}">
+                    <i class="fa-solid fa-edit"></i>
+                </a>
+                {% endif %}
+                {% if user.is_staff  %}
+                <a href="{% url 'assets:delete_asset' asset.id %}">  
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

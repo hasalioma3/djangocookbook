@@ -1,0 +1,21 @@
+<!-- extend base -->
+{% extends 'base.html' %}
+{% block title %}
+      ASSET LIST
+    {% endblock %}
+{% block content %}
+
+<div class='text-center'>
+    {% comment %} {% if request.user == object.user %} {% endcomment %}
+        <p>Are you sure you want to delete {{assets.name}} with barcode {{assets.barcode}}</p>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger btn-sm" value="Delete" />
+            <input class="btn btn-secondary btn-sm" type="button" value="Cancel" onclick="window.location='{% url 'assets:assets_list' %}'"/>
+        </form>
+    {% comment %} {% else %} {% endcomment %}
+        {% comment %} <h4>You're not allowed to be here.</h4>
+        <a href="{% url 'assets:assets_list' %}">Home</a> {% endcomment %}
+    {% comment %} {% endif %} {% endcomment %}
+</div>
+{% endblock %}

@@ -3,7 +3,8 @@
         printers->laptops->desktops->
     Assets(allow excel upload, download template)
         Category -> Make + model -> Specification -> Serial(unique) -> barcode(unique) -> Date added
-
+    implement asset searc
+    
 > laptops nnb
     laptops lists(searchable)| where Category=laptop. => select list from view(Assets)
         Make + model -> Specification -> Serial(unique) -> barcode(unique) -> Date added

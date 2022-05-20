@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}
+      ASSET LIST
+    {% endblock %}
+{% block content %}
+<form method="post"> 
+    {% csrf_token %} 
+    <!-- {{form.as_p}} -->
+
+    {{ form.non_field_errors }}
+    <div class="fieldWrapper">
+        {{form.name.errors}}
+        <label for="{{form.name.id}}">Name</label>
+        {{form.name}}
+    </div>
+    <div class="fieldWrapper">
+        {{form.description.errors}}
+        <label for="{{form.description.id}}">Description</label>
+        {{form.description}}
+    </div>
+    <div class="fieldWrapper">
+        
+        <label for="{{form.category.id}}">Category</label>
+        {{form.category}}
+    </div>
+    <div class="fieldWrapper">
+        <div class="danger">{{form.price.errors}}</div>
+        <label for="{{form.price.id}}">Price</label>
+        {{form.price}}
+        {{form.category.errors}}
+    </div>
+    <div class="fieldWrapper">
+        
+        <label for="{{form.barcode.id}}">Barcode</label>
+        {{form.barcode}}
+        {% if form.barcode.errors %}
+        <div class="alert alert-danger alert-dismissible fade show">{{form.barcode.errors}}</div>
+        {% endif %}
+    </div>
+    <div class="fieldWrapper">
+        
+        <label for="{{form.serial_No.id}}">Serial No</label>
+        {{form.serial_No}}
+        {% if form.serial_No.errors %}
+        <div class="alert alert-danger alert-dismissible fade show">
+            {{form.serial_No.errors}}
+        </div>
+        {% endif %}
+    </div>
+
+
+
+    <input type="submit" value="Submit" class="btn btn-primary btn-sm">
+</form>
+{% endblock %}

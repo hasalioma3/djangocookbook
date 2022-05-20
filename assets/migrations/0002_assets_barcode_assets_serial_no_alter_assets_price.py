@@ -7,25 +7,27 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('assets', '0001_initial'),
+        ("assets", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='assets',
-            name='barcode',
+            model_name="assets",
+            name="barcode",
             field=models.CharField(default=2, max_length=16, unique=True),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='assets',
-            name='serial_No',
-            field=models.CharField(default=django.utils.timezone.now, max_length=16, unique=True),
+            model_name="assets",
+            name="serial_No",
+            field=models.CharField(
+                default=django.utils.timezone.now, max_length=16, unique=True
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='assets',
-            name='price',
+            model_name="assets",
+            name="price",
             field=models.DecimalField(decimal_places=2, max_digits=10),
         ),
     ]
