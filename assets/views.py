@@ -8,13 +8,23 @@ from assets.models import Categories, Assets
 from .forms import AssetForm, CategoryForm
 
 # LIST OF ASSETS
-class AssetsList(TemplateView):
+# class AssetsList(TemplateView):
+#     template_name = 'assets/assets_list.html'
+
+#     def get(self, request):
+#         assets = Assets.objects.all()
+#         return render(request, self.template_name, {'assets': assets})
+
+# list of assets with pagination
+class AssetsList(ListView):
+    model = Assets
     template_name = 'assets/assets_list.html'
-
-    def get(self, request):
-        assets = Assets.objects.all()
-        return render(request, self.template_name, {'assets': assets})
-
+    context_object_name = 'assets'
+    paginate_by = 10
+    
+    
+    
+    
 # add new asset
 class AddAsset(CreateView):
     model = Assets

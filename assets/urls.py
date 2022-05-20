@@ -5,6 +5,8 @@ from django.urls import path
 app_name = 'assets'
 urlpatterns = [
     path('', AssetsList.as_view(), name='assets_list'),
+    # pagination
+    path('page/<int:page>/', AssetsList.as_view(), name='assets_list_page'),
     path('add_asset/', AddAsset.as_view(), name='add_asset'),
     path('add_category/', AddCategory.as_view(), name='add_category'),
     path('edit_asset/<int:pk>/', EditAsset.as_view(), name='edit_asset'),
