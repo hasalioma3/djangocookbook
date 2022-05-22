@@ -1,0 +1,62 @@
+<!-- extend base -->
+{% extends 'base.html' %}
+{% block title %}
+      LAPTOPS LIST
+    {% endblock %}
+{% block content %}
+
+{% comment %} list all laptops {% endcomment %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Laptops</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for laptop in laptops %}
+                    <tr>
+                        <td>{{ laptop.name }}{{ laptop.description }}</td>
+                        <td>{{ laptop.category }}</td>
+                        <td>{{ laptop.price }}</td>
+                        <td>edit update del</td>
+
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% comment %} pagination {% endcomment %}
+    
+    <div class="col-md-12 text-center">
+        <ul class="pagination">
+            {% if previous_url %}
+            <li><a href="{{ previous_url }}">Previous</a></li>
+            {% endif %}
+            {% for page in pages_range %}
+            {% if page == current_page %}
+            <li class="active"><a href="{{ page.url }}">{{ page.number }}</a></li>
+            {% else %}
+            <li><a href="{{ page.url }}">{{ page.number }}</a></li>
+            {% endif %}
+            {% endfor %}
+            {% if next_url %}
+            <li><a href="{{ next_url }}">Next</a></li>
+            {% endif %}
+        </ul>
+        </div>
+    
+</div>
+{% endblock %}
